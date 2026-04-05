@@ -120,7 +120,8 @@ def send_email(analysis_text, product_count):
     msg["To"]      = ALERT_EMAIL
     msg.attach(MIMEText(html_body, "html"))
     try:
-        with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
+        with smtplib.SMTP("smtp.gmail.com", 587) as server:
+    server.starttls()
             server.login(GMAIL_ADDRESS, GMAIL_APP_PASS)
             server.sendmail(GMAIL_ADDRESS, ALERT_EMAIL, msg.as_string())
         print(f"  Email sent to {ALERT_EMAIL}")
