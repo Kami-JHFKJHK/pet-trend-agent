@@ -8,9 +8,7 @@ from email.mime.multipart import MIMEMultipart
 from datetime import datetime
 
 # ============================================================
-#  CONFIGURATION
-#  On your laptop: fill these in directly
-#  On Railway: set these as Environment Variables instead
+#  CONFIGURATION — Railway reads these from Environment Variables
 # ============================================================
 GMAIL_ADDRESS  = os.environ.get("GMAIL_ADDRESS",  "your_email@gmail.com")
 GMAIL_APP_PASS = os.environ.get("GMAIL_APP_PASS", "xxxx xxxx xxxx xxxx")
@@ -121,7 +119,7 @@ def send_email(analysis_text, product_count):
     msg.attach(MIMEText(html_body, "html"))
     try:
         with smtplib.SMTP("smtp.gmail.com", 587) as server:
-    server.starttls()
+            server.starttls()
             server.login(GMAIL_ADDRESS, GMAIL_APP_PASS)
             server.sendmail(GMAIL_ADDRESS, ALERT_EMAIL, msg.as_string())
         print(f"  Email sent to {ALERT_EMAIL}")
